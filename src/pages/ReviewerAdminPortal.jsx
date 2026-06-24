@@ -46,6 +46,8 @@ function ReviewerAdminPortal() {
     if (data === true) {
   localStorage.setItem('innovation_dashboard_review_admin_login', 'true');
 
+  
+
   window.dispatchEvent(
     new Event('reviewerAdminLoginChanged')
   );
@@ -61,12 +63,17 @@ function ReviewerAdminPortal() {
   }
 
   function handleLogout() {
-    localStorage.removeItem('innovation_dashboard_review_admin_login');
-    setIsLoggedIn(false);
-    setActiveTab('reviewer');
-    setAccessCode('');
-    setLoginError('');
-  }
+  localStorage.removeItem('innovation_dashboard_review_admin_login');
+
+  window.dispatchEvent(
+    new Event('reviewerAdminLoginChanged')
+  );
+
+  setIsLoggedIn(false);
+  setActiveTab('reviewer');
+  setAccessCode('');
+  setLoginError('');
+}
 
   if (!isLoggedIn) {
     return (
