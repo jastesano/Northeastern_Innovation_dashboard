@@ -223,130 +223,6 @@ const SupabaseDashboard = () => {
     ].map(title => title.toLowerCase()))
   };
 
-  const qualitativeThemeExcludedTitles = {
-    challenges: {
-      'Resource Constraints': new Set([
-        'Writing Creatively in the Age of AI',
-        'SIG (Student Interest Group) Leader Training Module',
-        'Align Online',
-        'The Innovation Nexus',
-        'Redevelopment and Expansion of EESC3000 – Values, Ethics, and Professionalism in the Sciences',
-        'Integration of UG curriculum to PlusOne',
-        'Impact Project',
-        'Embedded Partners Program',
-        'Proposed Global Urban Studies Major/Minor',
-        'CAMD10',
-        'Student Leadership Development (Student Interest Groups & Graduate Leadership Institute) - Toronto Campus',
-        'Experiential Learning Insights (E.L.I) Dashboard',
-        'UIP in Applied Sustainability',
-        'Drone Flying Program',
-        'Co-curricular Experiential Project (Pilot)'
-      ].map(title => title.toLowerCase())),
-      'Stakeholder Engagement': new Set([
-        'The Neurodiversity Initiative',
-        'Miami Innovation Academy',
-        'The Innovation Nexus',
-        'Redevelopment and Expansion of EESC3000 – Values, Ethics, and Professionalism in the Sciences',
-        'Campus as a Living Laboratory: Community-Led Urban Greening through the California Climate Action Corps',
-        'Health Forward',
-        'Value Creation',
-        'Public Transportation and Traffic Analysis in Toronto - Northeastern University in Toronto and the City of Toronto',
-        'Experiential Learning Insights (E.L.I) Dashboard',
-        'COS Science Connects to Innovation',
-        'CUNEF Universidad Co-Enrollment Residency Partnership',
-        'Northeastern University Global Innovation Challenge',
-        'cPort Credit Union Language Translation Tool',
-        'Campfire Chats',
-        'AI Readiness Survey',
-        'EDHEC Partnership',
-        'Working Lab',
-        'Pre-Arrival Career Development Program',
-        'Use of Airtable and Airtable AI for Operational Effiency at Scale',
-        'Building An Entrepreneurship Eco-System To Serve London & The Global Network',
-        'Belonging in Practice: Driving Innovation in UK Higher Education through New Institutional Practices for Holistic Inclusion'
-      ].map(title => title.toLowerCase())),
-      'Technical Complexity': new Set([
-        'Miami Innovation Academy',
-        'The Innovation Nexus',
-        'Accelerated Bachelor of Science in Nursing (ABSN) Program, Simulation Rooms, & Skills Lab',
-        'Speech-Language Center',
-        'Chan Norris Scholars program',
-        'Campus as a Living Laboratory: Community-Led Urban Greening through the California Climate Action Corps',
-        'Investigating the International Big Picture Learning Credential (IBPLC) for U.S. Admissions and Workforce Pathways',
-        'Impact Project',
-        'Support for Federal Employees, Federal Contractors, and Military/Veterans in Transition',
-        'Media Studios Organization (MSO): A Centralized Creative Technology Ecosystem',
-        'Northeastern University Global Innovation Challenge',
-        'AI Readiness Survey',
-        'Healthcare Gap Year Program',
-        'MaineSeq',
-        'AI Solutions Hub',
-        'Arlington County Leader’s Challenge Program',
-        'Pre-Arrival Career Development Program',
-        'Embedded Partner Ecosystem - Vancouver Campus.',
-        'Building An Entrepreneurship Eco-System To Serve London & The Global Network',
-        'Belonging in Practice: Driving Innovation in UK Higher Education through New Institutional Practices for Holistic Inclusion',
-        'Utilising Artificial Intelligence as a Learning Tool to Explore the Development of Undergraduate Students’ Mathematical Resilience',
-        'BioDesign for Rural Maine',
-        'Northeastern Toronto Entrepreneurship (Enactus)'
-      ].map(title => title.toLowerCase())),
-      'Coordination Challenges': new Set([
-        'Speech-Language Center',
-        'Campus as a Living Laboratory: Community-Led Urban Greening through the California Climate Action Corps',
-        'Health Forward',
-        'Res Hall Royale',
-        'InStage AI Reflection Tool for Co-op',
-        'Pioneering Academia-Industry Collaborations at the Intersection of Artificial Intelligence & Philosophy',
-        'BioDesign for Rural Maine',
-        'Northeastern Toronto Entrepreneurship (Enactus)'
-      ].map(title => title.toLowerCase())),
-      'Scaling & Growth': new Set([
-        'Accelerated Bachelor of Science in Nursing (ABSN) Program, Simulation Rooms, & Skills Lab',
-        'Impact Project',
-        'Embedded Partners Program',
-        'Toronto Peer Mentorship Program',
-        'Student Leadership Development (Student Interest Groups & Graduate Leadership Institute) - Toronto Campus',
-        'Sustainability Initiatives',
-        'Behavior-Changing Workplace Learning',
-        'AI Readiness Survey',
-        'MaineSeq',
-        'Building An Entrepreneurship Eco-System To Serve London & The Global Network',
-        'Pioneering Academia-Industry Collaborations at the Intersection of Artificial Intelligence & Philosophy',
-        'Co-curricular Experiential Project (Pilot)'
-      ].map(title => title.toLowerCase()))
-    },
-    impact: {
-      'Research Advancement': new Set([
-        'Graduate Leadership Institute-Seattle Campus',
-        'Case Study Simulation Program',
-        'Redevelopment and Expansion of EESC3000 – Values, Ethics, and Professionalism in the Sciences',
-        'Impact Project',
-        'Student Leadership Development (Student Interest Groups & Graduate Leadership Institute) - Toronto Campus',
-        'Behavior-Changing Workplace Learning',
-        'Campfire Chats',
-        'MaineSeq',
-        'Pre-Arrival Career Development Program'
-      ].map(title => title.toLowerCase())),
-    }
-  };
-
-  const qualitativeThemeIncludedTitles = {
-    impact: {
-      'Operational Efficiency': new Set([
-        'Seattle Campus Innovative Spaces',
-        'Integration of UG curriculum to PlusOne',
-        'Embedded Partners Program',
-        'AI Coach',
-        'Media Studios Organization (MSO): A Centralized Creative Technology Ecosystem',
-        'Partner Hub: Connecting Industry and Academia',
-        'InStage AI Reflection Tool for Co-op',
-        'Use of Airtable and Airtable AI for Operational Effiency at Scale',
-        'Embedded Partner Ecosystem - Vancouver Campus.',
-        'Graduate Student Advising Model: Graduate Faculty Advisor/Program Director Training / Faculty Advisor Use of Navigate'
-      ].map(title => title.toLowerCase()))
-    }
-  };
-
   const isThemeProjectExcluded = (theme, project) => {
     const excludeSet = themeExcludedTitles[theme];
     if (!excludeSet) return false;
@@ -387,6 +263,26 @@ const SupabaseDashboard = () => {
       ...normalizeArray(project.strategicFocusAreas),
       ...normalizeArray(project.raw_supabase_project?.strategic_focus_areas),
       ...normalizeArray(project.raw_supabase_project?.strategicFocusAreas)
+    ];
+  };
+
+  // Read a project's common challenges from the stored Supabase column
+  const getCommonChallenges = (project) => {
+    return [
+      ...normalizeArray(project.common_challenges),
+      ...normalizeArray(project.commonChallenges),
+      ...normalizeArray(project.raw_supabase_project?.common_challenges),
+      ...normalizeArray(project.raw_supabase_project?.commonChallenges)
+    ];
+  };
+
+  // Read a project's impact themes from the stored Supabase column
+  const getImpactThemes = (project) => {
+    return [
+      ...normalizeArray(project.impact_themes),
+      ...normalizeArray(project.impactThemes),
+      ...normalizeArray(project.raw_supabase_project?.impact_themes),
+      ...normalizeArray(project.raw_supabase_project?.impactThemes)
     ];
   };
 
@@ -434,31 +330,14 @@ const SupabaseDashboard = () => {
       // consistent with how the Strategic Focus Areas card counts projects.
       const matchesTheme = !theme || getStrategicFocusAreas(project).includes(theme);
 
-      // Qualitative theme filter (Challenges/Impact themes)
+      // Qualitative theme filter (Challenges/Impact themes) - match the stored
+      // Supabase columns, consistent with how the Common Challenges and Impact
+      // Themes cards count projects.
       let matchesQualitativeTheme = !qualitativeTheme;
-      if (qualitativeTheme) {
-        const includeSet =
-          qualitativeThemeIncludedTitles[qualitativeTheme.type] &&
-          qualitativeThemeIncludedTitles[qualitativeTheme.type][qualitativeTheme.theme];
-        if (includeSet) {
-          matchesQualitativeTheme = includeSet.has(project.title.toLowerCase());
-        } else {
-          const keywords = getQualitativeKeywords();
-          const text = (project.qualitative.challenges + ' ' + project.qualitative.impact).toLowerCase();
-          if (keywords[qualitativeTheme.type] && keywords[qualitativeTheme.type][qualitativeTheme.theme]) {
-            matchesQualitativeTheme = keywords[qualitativeTheme.type][qualitativeTheme.theme].some(keyword =>
-              text.includes(keyword.toLowerCase())
-            );
-          }
-        }
-        if (matchesQualitativeTheme) {
-          const excludeSet =
-            qualitativeThemeExcludedTitles[qualitativeTheme.type] &&
-            qualitativeThemeExcludedTitles[qualitativeTheme.type][qualitativeTheme.theme];
-          if (excludeSet && excludeSet.has(project.title.toLowerCase())) {
-            matchesQualitativeTheme = false;
-          }
-        }
+      if (qualitativeTheme?.type === 'challenges') {
+        matchesQualitativeTheme = getCommonChallenges(project).includes(qualitativeTheme.theme);
+      } else if (qualitativeTheme?.type === 'impact') {
+        matchesQualitativeTheme = getImpactThemes(project).includes(qualitativeTheme.theme);
       }
 
       return matchesSearch && matchesCampus && matchesCollege && matchesStage && matchesDataStatus && matchesTheme && matchesQualitativeTheme;
