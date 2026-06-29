@@ -55,20 +55,16 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
   const [activeFilters, setActiveFilters] = useState(DEFAULT_FILTERS);
-  const [includeTestRecords, setIncludeTestRecords] = useState(false);
 
   const fetchSupabaseProjects = async () => {
     setLoading(true);
     setErrorMessage('');
 
-    let query = supabase
+    const query = supabase
       .from('projects')
       .select('*')
+      .eq('is_test', false)
       .order('project_id', { ascending: true });
-
-    if (!includeTestRecords) {
-      query = query.eq('is_test', false);
-    }
 
     const { data, error } = await query;
 
@@ -90,7 +86,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     fetchSupabaseProjects();
-  }, [includeTestRecords]);
+  }, []);
 
   const getProjectStage = (project) => {
     if (project.maturity_stage) return project.maturity_stage;
@@ -360,20 +356,6 @@ const Dashboard = () => {
 
       <main className="dashboard-main">
         <Introduction />
-
-        <div style={{ marginBottom: '20px' }}>
-          <label style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
-            <input
-              type="checkbox"
-              checked={includeTestRecords}
-              onChange={(event) => {
-                setIncludeTestRecords(event.target.checked);
-                setActiveFilters(DEFAULT_FILTERS);
-              }}
-            />
-            Include test records
-          </label>
-        </div>
 
         {errorMessage && (
           <div

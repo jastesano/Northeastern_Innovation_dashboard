@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabaseClient';
 import ReviewerDashboard from './ReviewerDashboard';
 import AdminDashboard from './AdminDashboard';
+import PublishManagement from '../components/PublishManagement';
 import '../styles/Reviewer.css';
 
 function ReviewerAdminPortal() {
@@ -44,18 +45,14 @@ function ReviewerAdminPortal() {
     }
 
     if (data === true) {
-  localStorage.setItem('innovation_dashboard_review_admin_login', 'true');
+      localStorage.setItem('innovation_dashboard_review_admin_login', 'true');
 
-  
+      window.dispatchEvent(new Event('reviewerAdminLoginChanged'));
 
-  window.dispatchEvent(
-    new Event('reviewerAdminLoginChanged')
-  );
-
-  setIsLoggedIn(true);
-  setAccessCode('');
-  setLoginError('');
-}else {
+      setIsLoggedIn(true);
+      setAccessCode('');
+      setLoginError('');
+    } else {
       setLoginError('Invalid access code. Please try again.');
     }
 
@@ -63,17 +60,15 @@ function ReviewerAdminPortal() {
   }
 
   function handleLogout() {
-  localStorage.removeItem('innovation_dashboard_review_admin_login');
+    localStorage.removeItem('innovation_dashboard_review_admin_login');
 
-  window.dispatchEvent(
-    new Event('reviewerAdminLoginChanged')
-  );
+    window.dispatchEvent(new Event('reviewerAdminLoginChanged'));
 
-  setIsLoggedIn(false);
-  setActiveTab('reviewer');
-  setAccessCode('');
-  setLoginError('');
-}
+    setIsLoggedIn(false);
+    setActiveTab('reviewer');
+    setAccessCode('');
+    setLoginError('');
+  }
 
   if (!isLoggedIn) {
     return (
@@ -120,7 +115,7 @@ function ReviewerAdminPortal() {
             <div>
               <h1 className="reviewer-title">Reviewer/Admin Portal</h1>
               <p className="reviewer-subtitle">
-                Use the tabs below to review submissions or monitor the full submission workflow.
+                Use the tabs below to review submissions, monitor the workflow, or manage published projects.
               </p>
             </div>
 
@@ -153,12 +148,26 @@ function ReviewerAdminPortal() {
             >
               Admin
             </button>
+
+            <button
+              type="button"
+              className={
+                activeTab === 'publishManagement'
+                  ? 'reviewer-admin-tab reviewer-admin-tab-active'
+                  : 'reviewer-admin-tab'
+              }
+              onClick={() => setActiveTab('publishManagement')}
+            >
+              Publish Management
+            </button>
           </div>
         </section>
 
         {activeTab === 'reviewer' && <ReviewerDashboard embedded />}
 
         {activeTab === 'admin' && <AdminDashboard embedded />}
+
+        {activeTab === 'publishManagement' && <PublishManagement />}
       </div>
     </div>
   );
