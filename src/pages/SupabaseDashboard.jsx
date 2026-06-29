@@ -38,6 +38,7 @@ const SupabaseDashboard = () => {
     const { data, error } = await supabase
       .from('projects')
       .select('*')
+      .or('status.eq.published,status.is.null')
       .order('created_at', { ascending: false });
 
     if (error) {

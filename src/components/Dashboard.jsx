@@ -64,6 +64,7 @@ const Dashboard = () => {
       .from('projects')
       .select('*')
       .eq('is_test', false)
+      .or('status.eq.published,status.is.null')
       .order('project_id', { ascending: true });
 
     const { data, error } = await query;
