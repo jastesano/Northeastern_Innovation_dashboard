@@ -18,7 +18,7 @@ const Header = () => {
           </div>
           
           <div className="header-title">
-            <h1>Northeastern University Innovation Report 2025</h1>
+            <h1>Northeastern University Innovation Report</h1>
           </div>
         </div>
       </div>
